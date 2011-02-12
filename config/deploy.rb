@@ -1,15 +1,15 @@
-set :application, 'public_html'
-set :repository, "set this to URL of your site's repo"
+set :application, 'public'
+set :repository, "git@github.com:craftstudios/ginger-leprechaun.git"
 
 # Set :user if you want to connect (via ssh) to your server using a
 # different username. You will also need to include the user in :domain
 # (see below).
 #
-#set :user, "deploy"
-#set :domain, "#{user}@example.com"
-set :domain, "example.com"
+set :domain, "gingerleprechaun.com"
 
-set :deploy_to, "/var/apps/#{application}"
+# set :rsync_flags, ['-e', '"ssh -p 42000"', '-azP', '--delete'] # what's this for?
+
+set :deploy_to, "/home/keeny/public_html/gingerleprechaun.com/#{application}"
 
 # ============================================================================
 # You probably don't need to worry about anything beneath this point...
