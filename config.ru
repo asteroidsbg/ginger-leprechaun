@@ -1,5 +1,10 @@
 require 'rubygems'
 require 'bundler/setup'
+require "logger"
+
+require 'coderay'
+require 'rack/codehighlighter'
+use Rack::Codehighlighter, :coderay, :markdown => true, :element => "pre>code", :pattern => /\A:::(\w+)\s*(\n|&#x000A;)/i
 
 Bundler.require(:default)
 
