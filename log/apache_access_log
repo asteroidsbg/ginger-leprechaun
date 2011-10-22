@@ -1,0 +1,6 @@
+127.0.0.1 - - [22/Oct/2011:20:17:03 +1300] "GET / HTTP/1.1" 200 10293
+127.0.0.1 - - [22/Oct/2011:20:17:05 +1300] "GET /css/master.css HTTP/1.1" 200 5504
+127.0.0.1 - - [22/Oct/2011:20:17:13 +1300] "GET /magento/integrate-magento-silverstripe-autoloaders HTTP/1.1" 200 9235
+127.0.0.1 - - [22/Oct/2011:20:17:13 +1300] "GET /css/master.css HTTP/1.1" 200 5504
+127.0.0.1 - - [22/Oct/2011:20:19:18 +1300] "GET /magento/integrate-magento-silverstripe-autoloaders HTTP/1.1" 200 9235
+127.0.0.1 - - [22/Oct/2011:20:19:21 +1300] "GET /css/master.css HTTP/1.1" 200 5504

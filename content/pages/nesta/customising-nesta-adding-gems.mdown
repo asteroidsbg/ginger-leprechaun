@@ -1,0 +1,38 @@
+date: 2010-10-17 23:34:52 +1200
+categories: nesta
+read more: Read more on passenger not finding gems
+summary: It's worth noting for the newbies that nesta uses [bundler](http://gembundler.com/), so you need to explicitly add gems to your `Gemfile` or you won't be able to require them.
+
+# Adding additional gems to nesta
+
+It's worth noting for the newbies that nesta uses [bundler](http://gembundler.com/), so you need to explicitly add gems to your `Gemfile` or you won't be able to require them. I was getting
+
+	no such file to load --
+	
+from passenger using RVM. With excellent help from [sutto](http://blog.ninjahideout.com/about-me) on <irc://freenode/rvm>, I did two things:
+
+1. Made sure I had the files `.rvmrc` and `config/setup_load_paths.rb` to correctly set my gem path.
+2. Added the additional gems I wanted to use, to `Gemfile` in my nesta install.
+
+So in my case, my `Gemfile` now starts like this:
+
+	:::ruby
+	source :gemcutter
+
+	gem "builder", "2.1.2"
+	gem "haml", "3.0.12"
+	gem "maruku", "0.6.0"
+	gem "RedCloth", "4.2.2"
+	gem "sinatra", "1.0"
+	# I want to be able to require these aswell...
+	gem "rack-funky-cache", "0.0.3"
+	gem "coderay", "0.9.5"
+	gem "rack-codehighlighter", "0.4.7"
+	
+	...
+	
+
+
+> References:  
+> [The Path to Better RVM & Passenger Integration](http://blog.ninjahideout.com/posts/the-path-to-better-rvm-and-passenger-integration)  
+> [A Guide to a Nginx, Passenger and RVM Server](http://blog.ninjahideout.com/posts/a-guide-to-a-nginx-passenger-and-rvm-server)

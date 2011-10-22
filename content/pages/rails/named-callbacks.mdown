@@ -1,0 +1,32 @@
+date: Date: 2007-03-22 10:11:08 +1200
+categories: rails
+read more: Read more on Named Callbacks
+summary: Coming from a Java background I often find myself wanting to override constructors and other hooks. Using named callbacks better conveys your intention, making your code more readable.
+
+# Named Callbacks
+=================
+
+Coming from a Java background I often find myself wanting to override constructors and other hooks. I should really pay more attention to the [documentation](http://www.pragmaticprogrammer.com/titles/rails/). #fishpond!!
+
+Instead of:
+
+	class MyClass
+		def after_initialize
+			#Do Something...
+		end
+	end
+
+Do:
+
+	class MyClass
+		after_initialize :do_something
+
+		def do_something
+			#Do Something...
+		end
+	end
+
+Using named callbacks better conveys your intention, making your code more readable.
+
+References:
+[RailsConf Recap: Named Callbacks](http://www.therailsway.com/2007/6/7/railsconf-recap-named-callbacks)

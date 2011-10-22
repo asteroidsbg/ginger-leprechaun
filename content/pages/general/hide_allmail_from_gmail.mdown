@@ -1,0 +1,12 @@
+date: Date: 2010-10-06 10:59:08 +1200
+read more: Read more about hiding 'All Mail' from GMail
+summary: To hide the 'All Mail' folder, go to `Settings>Labs` and add the 'Advanced IMAP Controls widget'. Now you can go to `Settings>Labels` and untick `Show in IMAP` for 'All Mail' and 'Starred'.
+
+# Hide 'All Mail' from GMail
+
+If like me you prefer to use your desktop mail app for accessing your GMail account, you're probably sick of imap syncing with the 'All Mail' folder all the time.
+
+To hide the 'All Mail' folder, go to `Settings>Labs` and add the 'Advanced IMAP Controls widget'.
+
+Now you can go to `Settings>Labels` and untick `Show in IMAP` for 'All Mail' and 'Starred'. (Email you mark as 'Flagged' in your desktop client will show up in the 'Starred' folder in Web GMail)
+

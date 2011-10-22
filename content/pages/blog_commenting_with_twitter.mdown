@@ -1,0 +1,23 @@
+date: 2010-10-09 12:20:53 +1200
+read more: Read more on using twitter for comments
+summary: Cognition have collocated our comments on Twitter. Share a tweet-length response here, and, with your permission, it will go there. If you are moved to respond with more than 140 characters, post the response on your website, and it will show up here. 
+
+# Ebola and outsourcing your comment system
+
+Happy Cog (I heart Happy Cog) recently launched a blog, [Cognition](http://cognition.happycog.com/article/is-this-thing-on).
+
+> Speaking of experiments, there’s our comments section. [W]e’ve collocated our comments on Twitter. Share a tweet-length response here, and, with your permission, it will go there. If you are moved to respond with more than 140 characters, post the response on your website, and it will show up here. 
+
+Yeah-yeah, so I 'get it' that you can either say something quick and that perhaps something more involved belongs in it's own space, so you don't look like the-guy-that's-been-blabbering-at-the-pub-table-for-10minutes-without-letting-anyone-else-get-a-word-in-edgeways....
+
+But what about the mid-level discussion, that you can't squeeze into 140chars, but that doesn't warrant it's own blog post? This often happens on technical blogs when discussing code. I mean... often blogs are full of half realised brain-farts as it is, without making them home's for snippets of conversation without the context.
+
+Perhaps we should do as [Giles](http://giles.tumblr.com/) does and...
+
+> post random things that are too small for my main blog and too big for Twitter
+
+so that we can use a comment system that, to be fair, could potentially spread your article like weaponised ebola.
+
+![Ebola](../attachments/ebola.jpg)  
+<sup><a href="http://en.wikipedia.org/wiki/Viral_marketing" title="Viral marketing - Wikipedia">
+	Viral marketing - Wikipedia</a></sup>

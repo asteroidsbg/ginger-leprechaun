@@ -1,0 +1,3 @@
+# Nesta
+
+[Nesta](http://effectif.com/nesta) is a lightweight Content Management System, suitable for running small web sites or blogs. Nesta is written in Ruby using the [Sinatra web framework](http://sinatra.rubyforge.org/).

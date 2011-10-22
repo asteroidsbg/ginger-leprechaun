@@ -1,0 +1,25 @@
+date: Date: 2007-08-08 15:34:08 +1200
+categories: rails
+read more: Read more about the callbacks `before_add`, `after_add`, `before_remove` and `after_remove`
+summary: Similar to the normal callbacks that hook into the lifecycle of an Active Record object, you can also define callbacks that get trigged when you add an object to or remove an object from a association collection.
+
+
+# Association Callbacks
+
+Similar to the normal callbacks that hook into the lifecycle of an Active Record object, you can also define callbacks that get trigged when you add an object to or remove an object from a association collection. Example:
+
+	class Project
+		has_and_belongs_to_many :developers, :after_add => :evaluate_velocity
+
+		def evaluate_velocity(developer)
+			...
+		end
+	end
+
+It’s possible to stack callbacks by passing them as an array.
+
+Possible callbacks are: `before_add`, `after_add`, `before_remove` and `after_remove`.
+
+Should any of the `before_add` callbacks throw an exception, the object does not get added to the collection. Same with the `before_remove` callbacks, if an exception is thrown the object doesn’t get removed.
+
+_Note: These callbacks belong in in the model on which you call update_attribute in the HABTM relationship, not for its partner model._

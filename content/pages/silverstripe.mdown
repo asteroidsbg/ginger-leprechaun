@@ -1,0 +1,14 @@
+# SilverStripe
+
+[Silverstripe](http://www.silverstripe.org/) is an award-winning open source CMS platform written in PHP. It offers a great flexible framework for developers and a user-friendly admin area for end-users.
+
+## Useful SilverStripe resources
+
+Silverstripe is well documented and has a very helpful active community.
+
+- [Wiki Documentation](http://doc.silverstripe.org/doku.php) Guides, tutorials, community docs
+- [SSbits](http://www.ssbits.com/) Great recipes and tutorial site
+
+- [API Documentation](http://api.silverstripe.com/) The hardcore stuff
+- [SilverStripe Forums](http://www.silverstripe.org/forums/) If you're stuck, post a question here and someone usually has the answer.
+- [#silverstripe IRC Channel](<irc://freenode/rvm>) Developer chat

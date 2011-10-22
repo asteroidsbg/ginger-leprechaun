@@ -1,0 +1,23 @@
+date: Date: 2007-03-23 15:40:08 +1200
+categories: rails
+read more: Read more
+summary: Active Record (AR) is slow. All that nice reflection comes at a price. You should use AR to prototype your app, then take a look at the logs to see where SQL can be tweaked.
+
+# Improve Default Rails Database Performance
+============================================
+
+Active Record (AR) is slow. All that nice reflection comes at a price. You should use AR to prototype your app, then take a look at the logs.
+
+1. Sort your development log.
+
+If a database query is only run a few times, let AR handle it. If one is being run a 1000 times then we should pull it out and tweak it.
+
+2. Pull the SQL from the log
+
+Rails has already done the hard work for us, right?
+
+3. Tweak the SQL
+
+For example:
+
+Stick the tweaked DB query into your model using `find_by_sql()` and things should move along nicely... In fact I've seen some looped AR calls go from a few minutes to a few seconds by just pulling that loop out into one simple SQL query.

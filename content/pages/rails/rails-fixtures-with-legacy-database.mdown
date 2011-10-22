@@ -1,0 +1,15 @@
+date: Date: 2007-03-21 13:00:08 +1200
+categories: rails
+read more: Read more
+summary: The fixture file has to be TABLENAME.yml (not case sensitive)
+
+# Rails Fixtures with Legacy Database
+
+My setup was:
+
+MySQL Table name: `TABLENAME` (all caps)  
+Rails Model name: `TableName` (camel case)
+
+1. The fixture file has to be `TABLENAME.yml` (not case sensitive)
+2. `fixtures()` takes the symbol name of the Model, in this case `:tableName` (note the first lowercase letter) This is the bit that drove me mad - i was writing fixtures `:TableName` which appeared to work, but then the test failed if I tried `TableName(:foo)`
+3. Now you can write `tableName(:foo)`

@@ -1,0 +1,8 @@
+nesta
+ruby
+rails
+osx
+magento
+silverstripe
+php
+sysadmin

@@ -1,0 +1,18 @@
+date: 2007-03-21 14:36:53 +1200
+categories: osx
+read more: Read more
+summary: Certain applications depend on being able to read your `$PATH` and other environment variables. However those set in `.bash_profile` have absolutely no effect on apps started from the Dock.
+
+# Environment Variables in Mac OS X
+
+I've been recently having trouble starting [certain java applets](https://www.gotomeeting.com/) on my MacBook. For some reason, once downloaded, the Jar file would not extract or run. After much tinkering I found that the applets would work if I started my browser from the command line rather than the dock.
+
+Similarly I couldn't get certain scripts to work from textmate, but they would work if I started textmate from the command line.
+
+The problem was that the `$PATH` variable I had set in my `.bash_profile` was not the same as that set in my `~/.MacOS/environment.plist` file.
+
+Certain applications depend on being able to read your `$PATH` and other environment variables. However those set in `.bash_profile` have absolutely no effect on apps started from the Dock. Instead make sure that the `$PATH` variable in your `environment.plist` file is in sync with that in your `.bash_login` by doing
+
+	echo $PATH
+	
+in a terminal and copying the result into said file.
