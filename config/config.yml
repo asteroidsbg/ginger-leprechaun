@@ -64,4 +64,4 @@ content: content
 production:
   # cache: true
   content: content
-#   google_analytics_code: "UA-???????-?"
+  google_analytics_code: "UA-18800928-2"
