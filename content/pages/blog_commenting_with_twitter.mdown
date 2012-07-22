@@ -19,5 +19,4 @@ Perhaps we should do as [Giles](http://giles.tumblr.com/) does and...
 so that we can use a comment system that, to be fair, could potentially spread your article like weaponised ebola.
 
 ![Ebola](../attachments/ebola.jpg)  
-<sup><a href="http://en.wikipedia.org/wiki/Viral_marketing" title="Viral marketing - Wikipedia">
-	Viral marketing - Wikipedia</a></sup>
+<sup><a href="http://en.wikipedia.org/wiki/Viral_marketing" title="Viral marketing - Wikipedia">Viral marketing - Wikipedia</a></sup>
