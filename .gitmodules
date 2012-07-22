@@ -1,3 +1,6 @@
 [submodule "themes/slate"]
 	path = themes/slate
 	url = git://github.com/gma/nesta-theme-slate
+[submodule "themes/gl"]
+	path = themes/gl
+	url = git@github.com:craftstudios/gl.git
