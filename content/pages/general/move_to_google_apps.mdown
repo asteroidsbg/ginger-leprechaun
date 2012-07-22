@@ -1,0 +1,15 @@
+date: Date: 2010-09-29 13:42:08 +1200
+read more: Read more on my move to Google Apps
+summary: Recently I got mighty peeved off at how clunky and bloated my hosts webmail system was. And why should I be paying them for hosted email when I can get Google-class email hosting for free with Google Apps?
+
+# Move to Google Apps
+
+I'm not a fan of webmail - preferring to use a desktop client where possible, but sometimes you just need to access your mail on the road.
+
+Recently I got mighty peeved off at how clunky and bloated my hosts webmail system was. And why should I be paying them for hosting my personal email when I can get Google-class email hosting for [free with Google Apps](http://www.google.com/apps/intl/en/group/index.html)? All you need is your own domain name, which cost pennies these days.
+
+I'm happy to say I've made the move and it's great. I migrated all my old messages from mail with [Google Email Uploader for Mac](http://code.google.com/p/google-email-uploader-mac/) and now I can use Gmail with my own domain.
+
+Another huge business advantage is, I can concentrate on web-hosting without the nightmare headache of maintaining an email server. I've offloaded the 'mission critical' task of email to Google. No angry customers with, "my f$%*!@# email's been down for hours!!"
+
+Me = happy :-)

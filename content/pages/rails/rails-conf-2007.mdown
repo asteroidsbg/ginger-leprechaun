@@ -1,0 +1,11 @@
+date: Date: 2007-05-23 08:58:08 +1200
+categories: rails
+read more: Read more on RailsConf 2007
+summary: Ok, I've just got back from [RailsConf 2007](http://conferences.oreillynet.com/rails/). It was awesome to be amongst so many bright motivated people. The talks gave a broad overview on what was happening in the ruby community and the workshops explored specific topics in more technical depth.
+
+# RailsConf 2007
+
+[![Railsconf 2007](../../attachments/railsconf_2007.jpg)](../../attachments/railsconf_2007.jpg)
+Ok, I've just got back from [RailsConf 2007](http://conferences.oreillynet.com/rails/). It was awesome to be amongst so many bright motivated people. The talks gave a broad overview on what was happening in the ruby community and the workshops explored specific topics in more technical depth.
+
+In the next few posts I'll try and relate any advice I picked up while I was there, but to be honest a lot of it was above my head (especially the TDD stuff). For now, [here's where you can find most of the slides from the conference](http://wiki.oreillynet.com/wiki/railsconf2007/index.cgi?PresentationSlides).

@@ -1,0 +1,135 @@
+date: 2010-12-01 13:25:43 +13:00
+categories: magento, silverstripe
+read more: Read more about integrating your SilverStripe menu into Magento
+summary: I want to be able to display a SilverStripe menu on Magento pages.
+
+# Integrate SilverStripe menu to display on Magento pages
+
+## Expose SilverStripe menu using RESTful Server
+
+First we need to get SilverStripe to output a JSON representation of the pages in our site. I did this by creating a `REST` class. The idea is to have one place to put any functions for access over REST. That way you know where everything is, and can control security better.
+
+	:::php
+	/**
+	 * RESTful Server to expose certain SilverStripe data to Magento
+	 * e.g. menus, etc.
+	 *
+	 * @package default
+	 * @author Barry Keenan
+	 */
+	class REST extends DataObject {
+	
+		static $db = array(
+		);
+	
+		static $api_access = true;
+	
+		// important - must explicity allow the actions we want to access over REST
+		static $allowed_actions = array(
+			'TopMenu'
+		);
+	
+		function canEdit() { return true; }
+		function canView() { return true; }
+		function canCreate() { return true; }
+	
+	
+		// return second teir navigation pages
+		function TopMenu() {
+			$base_url = "http://" . $_SERVER['SERVER_NAME'] . "/";
+		
+			$whereStatement = "ShowInMenus = 1";
+			$pages = DataObject::get("Page", $whereStatement);
+		
+			$nav = array();
+			foreach($pages as $page) {
+				$nav[] = array(
+					'menuTitle' => $page->MenuTitle,
+					'url' => $base_url . $page->URLSegment
+				);
+			}
+		
+			echo json_encode($nav);
+			die();
+		}
+	}
+	
+You need to manually add a `REST` record to the database. And then you'll be able to access it at URLs like this:
+
+	http://localhost/api/v1/REST/1/
+	
+You can see that I'm accessing my one and only `REST` object using the id `1`. A great little tool for testing your RESTful URLs is [HTTP Client](http://ditchnet.org/httpclient/). If you use HTTP CLient to POST an empty string to this address:
+
+	http://localhost/api/v1/REST/1/TopMenu
+	
+You should get the following (example) data back from SilverStripe:
+
+	:::json
+	[{"menuTitle":"home","url":"localhost\/home"},{"menuTitle":"store","url":"localhost\/store"},{"menuTitle":"about","url":"localhost\/about"},{"menuTitle":"faq","url":"localhost\/faq"},{"menuTitle":"contact","url":"localhost\/contact"}]
+
+
+## Write a Magento module to grab the SilverStripe data
+
+So now we can get the data we need by simply posting to the above URL. Great :)
+
+All we need to do is write a custom magento module that grabs this data. (I intend to write a guide that details how to do this fairly soon(ish) ;) )
+<!-- If you need to get started with writing you own Magento module see this guide. -->
+
+I'll be using [Gen X Design's](http://www.gen-x-design.com/archives/making-restful-requests-in-php/) [excellent REST class](http://www.gen-x-design.com/wp-content/uploads/2009/05/restrequestincphp1.zip) to make my requests. I'm not completely sure if I've got the Magento concepts correct yet, but my 'controller' looks like this:
+
+	:::php
+	/**
+	* Display menu items from JSON source. In this case Silverstripe
+	*
+	* @codepool   Local
+	* @category   Craft
+	* @package    Craft_Silverstripe
+	* @module     Silverstripe
+	*/
+
+	require ('RestRequest.inc.php');
+
+	class Craft_Silverstripe_Block_Navigation extends Mage_Core_Block_Template {
+
+		protected $base_url = 'http://localhost/api/v1/REST';
+
+		public function menuItems() {
+
+			$request_data = array();
+			$request = new RestRequest($this->base_url . '/1/TopMenu', 'POST', $request_data);
+
+			// Is auth required??
+			// $request->setUsername ('user');
+			// $request->setPassword ('pass');
+			$request->execute();
+
+			// this will be an array of stdClass Objects
+			$items_json = json_decode($request->getResponseBody());
+
+			// Mage::log($items_json);
+
+			return $items_json;
+		}
+
+	}
+	
+So we have our 'controller' We also need a 'view' to display our menu:
+
+	:::php
+	<ul id="nav_top">
+	<?php foreach($this->menuItems() as $page) { ?>
+		<li><a href="<?php echo $page->url ?>"><?php echo $page->menuTitle ?></a></li>
+	<?php } ?>
+	</ul>
+	
+All you need to do now, is tell Magento about this block in your `page.xml` configuration using something like this:
+	
+	:::xml
+	<block type="craft_silverstripe/navigation" name="silverstripe.navigation" as="ssNav" template="silverstripe/navigation/view.phtml"/>
+	
+And then actually call the block, defined above, in your templates using this:
+
+	:::php
+	<?php echo $this->getChildHtml('ssNav') ?>
+	
+Hey presto! SilverStripe menu in Magento :)

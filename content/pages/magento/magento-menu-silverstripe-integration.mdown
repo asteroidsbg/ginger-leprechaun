@@ -1,0 +1,128 @@
+date: 2010-11-22 13:44:22 +13:00
+categories: magento, silverstripe
+read more: Read more about Magento SilverStripe integration
+summary: I want to be able to use Magento's categories as my main menu everywhere on the site and that means I need to access Magento data outside of it's install directory.
+
+# Integrate Magento categories menu with Silverstripe
+
+In my case I'm integrating with Silverstripe, but I'm sure you could adapt the `Mage` calls to your CMS of choice.
+
+In my setup I have SilverStripe installed in the root directory, and I have Magento installed in the sub directory `store`.
+
+	public_html/
+		silverstripe folder/
+		silverstripe folder/
+		..
+		store/
+			magento folder/
+			magento folder/
+			..
+
+I want to be able to use Magento's categories as my main menu everywhere on the site and that means I need to access Magento data outside of it's install directory.
+
+## Initialse the Mage object
+
+In `mysite/code/Page.php` we need to initialise the `Mage` object.
+
+	:::php
+	class Page_Controller extends ContentController {
+
+		public function init() {
+			parent::init();
+
+			...	
+
+			// docroot
+			$site_path = realpath(dirname(__FILE__) . '/../..' );
+		
+			// initialise Magento connection
+			require_once "$site_path/store/app/Mage.php";
+			Mage::app('default');
+		}
+		
+		...
+		
+	}
+	
+We can now make calls to `Mage` elsewhere in our Page class, in order to pull data from Magento. The best way to access and manipulate data in Magento is by using the `Mage` object's functions. For example: `getModel()` and `getHelper()`. Refer to my [Magento code cheatsheet](/magento/magento-code-cheatsheet) for further info.
+
+## Mapping Magento categories to SilverStripe pages
+
+I want to use Magento's categories as my main menu, so I just went ahead and overrode SilverStripe's `getMenu()` function. You may not want such extreme behaviour, so put the code in a different function if you wish.
+
+In my case I added another function `TopMenu()`, so I could actually access my SilverStripe pages.
+
+	:::php
+	class Page_Controller extends ContentController {
+
+		...
+	
+		/**
+		 * Overrides ContentController
+		 *
+		 * Use Magento categories rather than Silverstripe menus
+		 * @return DataObjectSet
+		 */
+		public function getMenu($level = 1) {
+	
+			// TODO: control levels. e.g. for sub categories
+	
+			$cat_helper = Mage::helper('catalog/category'); // get the magento category helper
+			$categories = $cat_helper->getStoreCategories(); // get top level categories
+
+			$pages = new DataObjectSet();
+	 		if(isset($categories)) {
+				foreach($categories as $category) {				
+					// Map magento 'Category' to a silverstripe 'Page' model 
+					$pages->push( new Page( array(
+						'Title' => $category->getName(),
+						'MenuTitle' => $category->getName(),
+						'URLSegment' => '/store/' . $category->getUrlKey() // I want all URLs to have a /store/ prefix
+					)));
+				}
+			}
+
+			return $pages;
+		}
+	
+		// return second teir navigation pages
+		function TopMenu() {
+			$whereStatement = "ShowInMenus = 1";
+			return DataObject::get("Page", $whereStatement);		
+		}
+		
+		...
+		
+	}
+	
+## Nice clean templates
+
+In my SilverStripe templates I can now do this :-D
+
+	:::html
+	<!-- SilverStripe menu -->
+	<ul id="nav_top" class="nav clearfix">
+		<% control TopMenu %>	  
+			<li class="$LinkingMode"><a href="$Link" title="Go to the $Title.XML page">$MenuTitle.XML</a></li>
+		<% end_control %>
+	</ul>
+
+	<!-- Magento categories menu -->
+	<ul id="nav_main" class="nav clearfix">
+		<% control Menu(1) %>	  
+			<li class="$LinkingMode"><a href="$Link" title="Go to the $Title.XML page">$MenuTitle.XML</a></li>
+		<% end_control %>
+	</ul>
+	
+
+
+
+
+
+
+
+
+
+
+
+

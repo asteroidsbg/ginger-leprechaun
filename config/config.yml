@@ -62,6 +62,6 @@ content: content
 # Don't forget to uncomment the "production:" line too...
 
 production:
-  # cache: true    
-  content: /home/keeny/public_html/gingerleprechaun.com/public/shared/content
-#   google_analytics_code: "UA-???????-?"
+  # cache: true
+  content: content
+  google_analytics_code: "UA-18800928-2"

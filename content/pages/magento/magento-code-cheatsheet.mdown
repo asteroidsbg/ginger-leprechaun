@@ -1,0 +1,51 @@
+date: 2010-11-22 13:44:22 +13:00
+categories: magento
+read more: Read more about Magento php coding
+summary: The best way to access and manipulate data in Magento is by using the `Mage` object's functions. For example: `getModel()` and `getHelper()`.
+
+# Magento code cheatsheet
+
+This is blatantly stolen from [sycha.com](http://www.sycha.com/magento-database-models-helpers-raw-sql-queries) for my reference...
+
+## Magento Database Models
+
+The best way to access and manipulate data in Magento is by using the provided objects and their associated functionality..
+For example, you can get a Magento category model like this:
+
+	:::php
+	$model_category = Mage::getModel('catalog/category');
+
+With your category model you now retrieve data
+e.g. get all child categories of category ID 2 and echo the name
+
+	:::php
+	$model_category = Mage::getModel('catalog/category');
+	foreach ($model_category->getCategories($id=2) as $category) {
+		echo $category->getName();
+	}
+	
+Refer to the API documentation to see what methods are available.
+
+## Magento Helper Classes
+
+Magento has helper classes which are pretty handy also.
+For example, you can get a Magento category helper like this:
+
+	:::php
+	$helper = Mage::helper('catalog/category');
+
+Your helper will have a bunch of methods defined for performing common tasks.
+For example, you can get all your stores top level categories as follows:
+
+	:::php
+	$helper = Mage::helper('catalog/category');
+	foreach ($helper->getStoreCategories() as $category) {
+		echo $category->getName();
+	}
+
+Check this file to see what methods are available in the catalog category helper:
+magento/app/code/core/Mage/Catalog/Helper/Category.php
+
+
+> References:
+> [Magento Database Models, Helpers and Raw SQL Queries](http://www.sycha.com/magento-database-models-helpers-raw-sql-queries)

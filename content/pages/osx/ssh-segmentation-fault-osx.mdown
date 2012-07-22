@@ -1,0 +1,10 @@
+date: 2007-07-09 10:01:53 +1200
+categories: osx
+read more: Read more on ssh segmentation fault in osx
+summary: Argh!! Every time I install an update on my MacBook it breaks ssh so I've decided to install [Fink](http://finkproject.org/) and openssh instead of using Apple's ssh.
+
+# ssh segmentation fault osx
+
+Argh!! Every time I install an update on my MacBook it breaks ssh. Up until now I'd been using [Pacifist](http://www.charlessoft.com/) to extract & reinstall the Kerberos Framework from the [10.4.8 update](http://www.apple.com/support/downloads/macosx1048comboupdateintel.html), as per [these instructions](http://macsingularity.org/2007/03/06/fix-ssh-segmentation-faults-in-tiger/).
+
+I'm now having to do this on a regular basis which is very annoying _and_ I'm getting concerned that replacing Kerberos with an older version is introducing security holes. so I've decided to install [Fink](http://finkproject.org/) and openssh instead of using Apple's ssh.

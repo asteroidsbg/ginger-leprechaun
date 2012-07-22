@@ -1,0 +1,16 @@
+read more: Read more about this blog
+summary: About Page
+menu title: About
+hide comments: true
+
+# A little bit about me
+
+Hi, I’m Barry - a freelance web developer, originally from Ireland. I called Edinburgh home for a long time and miss it still, but now live in sunny Nelson, New Zealand.
+
+I deliver fun fresh design, build sites with the latest technology, and care about my work. You can [follow me on twitter](http://twitter.com/#!/keenytn1) or view my [full CV on LinkedIn](http://www.linkedin.com/in/barrykeenan).
+
+I'm rediscovering [ruby](http://www.ruby-lang.org/en/) after being away from it for years... and rediscovering blogging in general. Basically this is where I keep notes for my my own reference, but others may find it useful too.
+
+I like climbing, snowboarding, good wine, good food, and [good music](http://www.last.fm/user/craftstudios).
+
+Baz :)

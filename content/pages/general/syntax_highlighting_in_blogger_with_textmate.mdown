@@ -1,0 +1,13 @@
+date: 2007-03-21 14:07:53 +1200
+read more: Read more
+summary: I discovered that you can export your current highlighting theme from textmate as CSS, using the bundle command `Create CSS From Current Theme` (vaguely enough ;) ). Then any time I want to post code snippets here, I use the similarly vague command `Create HTML From Document`. All you need to do is copy and paste the CSS into your Blogger template.
+
+# Syntax highlighting in blogger with textmate
+
+Eventually (in the far distant future) I want to set up my own server to host rails apps on and perhaps a blog driven by [Mephisto](http://mephistoblog.com/) - particularly cause you can get good syntax highlighting plugins for it.
+
+In the meantime, I discovered that you can [export your current highlighting theme from textmate as CSS](http://www.quirkey.com/blog/2006/07/13/highlight-me-baby/), using the bundle command `Create CSS From Current Theme` (vaguely enough ;) ). Then any time I want to post code snippets here, I use the similarly vague command `Create HTML From Document`
+
+All you need to do is copy and paste the CSS into your Blogger template.
+
+Beautiful.

@@ -1,0 +1,10 @@
+date: 2010-10-09 12:20:53 +1200
+categories: osx
+read more: Read more on garbled email attachments in osx mail using gmail imap
+summary: Using `mailbox -> rebuild` fixes the problem temporarily...
+
+# Email attachments garbled in osx mail using gmail imap
+
+Never had this problem before I switched to GMail's servers to host my email.
+
+Using `mailbox -> rebuild` fixes the problem temporarily...

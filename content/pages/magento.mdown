@@ -1,0 +1,3 @@
+# Magento
+
+[Magento](http://www.magentocommerce.com/) is an open source eCommerce platform written in PHP. It's BIG, very big. I'm on the steep side of the learning curve at the moment. Let's hope it levels off soon....

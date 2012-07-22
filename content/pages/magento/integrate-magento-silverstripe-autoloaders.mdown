@@ -1,0 +1,76 @@
+date: 2011-03-10 20:49:26 +13:00
+categories: magento, silverstripe
+read more: Read more about Magento SilverStripe integration
+summary: Make Magento and Silverstripe's `__autoload()` functions play nice.
+
+# Integrate Magento and Silverstripe autoloaders
+
+When you try to include the Magento `Mage` class in your SilverStripe project, Magento will try to load classes that have already been loaded by SilverStripe's `__autoload()` method. (bleh, try saying that 3 times fast ;)
+
+What I did was really hacky... Magento is really well namespaced, so I just gave it's autoloader a list of classes that it was allowed to load. Anything else is handled by SilverStripe's autoloader.
+
+Change `store/lib/Varien/Autoload.php` \[line 80-ish\] from this:
+
+	:::php
+	/**
+     * Load class source code
+     *
+     * @param string $class
+     */
+    public function autoload($class)
+    {
+        if ($this->_collectClasses) {
+            $this->_arrLoadedClasses[self::$_scope][] = $class;
+        }
+        if ($this->_isIncludePathDefined) {
+            $classFile = $class;
+        } else {
+            $classFile = str_replace(' ', DIRECTORY_SEPARATOR, ucwords(str_replace('_', ' ', $class)));
+        }
+        $classFile.= '.php';
+        return include $classFile;
+    }
+	
+to this:
+
+	:::php
+	/**
+	 * Load class source code
+	 *
+	 * @param string $class
+	 */
+	public function autoload($class)
+	{	
+		if ( $this->is_magento_class($class) ) {
+			if ($this->_collectClasses) {
+				$this->_arrLoadedClasses[self::$_scope][] = $class;
+			}
+			if ($this->_isIncludePathDefined) {
+				$classFile = $class;
+			} else {
+				$classFile = str_replace(' ', DIRECTORY_SEPARATOR, ucwords(str_replace('_', ' ', $class)));
+			}
+			$classFile.= '.php';
+			return include $classFile;	
+		}
+	}
+
+	/**
+	 * You need to manually maintain this list of classes - if you install a module for example
+	 */
+	private function is_magento_class($className) {
+		$namespaces = array('Zend', 'Varien', 'Mage', 'other', '3rd party', 'modules');
+	
+		$is_mage_class = false;
+		foreach($namespaces as $namespace) {
+			if( strpos($className, $namespace) !== false) {
+				$is_mage_class = true;
+			}
+		}
+	
+		return $is_mage_class;
+	}
+
+Obviously this is ridiculously hacky and I did it this way cause I was running out of time to get a specific project working.
+
+Maybe someone clever out there could devise some way of dynamically getting Magento's classes? Or maybe do it on the silverstripe end - silverstripe maintains a manifest of its classes. something like that...

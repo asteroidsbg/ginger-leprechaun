@@ -1,0 +1,254 @@
+date: Date: 2007-07-05 13:45:08 +1200
+categories: rails
+read more: Read more about deploying rails on windows
+summary: Rails with Oracle on Windows Server. Load balanced with Mongrel and Pen.
+
+# Deploy Rails with Oracle on Windows
+
+An application I'm developing is due to go public around Christmas. I thought the best way to get to grips with deployment would be to set up a little test application, before trying to move all my code onto the server. This guide will consist of 3 parts:
+
+1. Installing Rails
+2. My-first-app with Oracle
+3. Pen of pesky Mongrels
+
+I'll be using Windows Server, Oracle 10g, Mongrel & Pen. Many thanks to [Brian Hogan](http://www.napcs.com/) for his informative talk at RailsConf which made the whole process very easy. See [Deployment Strategies for Rails on Windows Servers](http://www.napcs.com/howto/rails/deploy/index.html) for more detailed information.
+
+
+Part 1: Installing Rails
+------------------------
+
+### Install Ruby
+
+Download the [one click windows installer](http://www.rubyonrails.org/down). When installing, uncheck 'SciTE' – there are better editors available. Also, make sure ‘Enable RubyGems’ is checked. This is the package manager for Ruby, used to install Rails itself and myriad of other stuff.
+
+Install to 'c:\program files\ruby' (or your installation path), then add ‘c:\program files\ruby\bin’ to your PATH for command line stuff.
+
+Goto ‘Control Panel\System’, select the ‘Advanced’ tab and click ‘Environment Variables’. Look under user variables. If PATH isn’t already defined, click ‘New’.
+
+    * Variable name = ‘PATH’
+    * Variable value = ‘%PATH%;c:\program files\ruby\bin’
+
+Note the ‘;’ separator in the value string. If PATH is already defined just add ‘;c:\program files\ruby\bin’ to the end of it.
+
+
+### Install Rails
+
+Now that we have ruby installed, we can use RubyGems to install rails.
+
+	gem install rails --include-dependencies
+
+Yes, it is that easy.
+
+### My-first-app
+
+Create your application skeleton and start the server:
+
+	rails path/to/your/new/application
+	cd path/to/your/new/application
+	ruby script/server
+
+Congratulations! You’re now on Rails.
+
+
+Part 2: Test Oracle with a simple app
+-------------------------------------
+
+Oracle can be tricky. It's probably best to get it working with a simple app first, to minimise headaches later.
+
+This guide assumes you are either:
+
+* connecting to an Oracle Database installed on your local machine.
+* connecting to a remote database using Oracle Instant Client installed on your local machine.
+
+If you do not have at least the [client software](http://www.oracle.com/database/index.html) installed, the Ruby-Oracle driver will complain that it can’t find files such as `oci.dll`.
+
+
+### Install Oracle Database Driver
+
+Download the [ruby oracle driver](http://rubyforge.org/projects/ruby-oci8) and install with:
+
+	ruby ruby-oci8-1.0.0-rc3-mswin32.rb
+
+You can test your connection to the database with the following one-liner:
+
+	ruby -r oci8 -e "OCI8.new('username', 'password', '127.0.0.1:1521/orcl').exec('SELECT * FROM test_table') do |r| puts r.join('|'); end"
+
+Of course, make sure the schema & table that you are testing exists!
+
+### Create a User
+
+Using SQLPlus, create a user with DBA privileges that you can use for this application.
+
+	GRANT dba TO ruby IDENTIFIED BY ruby;
+	ALTER USER ruby DEFAULT TABLESPACE users TEMPORARY TABLESPACE temp;
+	EXIT
+	
+___Edit: Granting DBA access is not advised. Only the necessary privileges (CREATE TABLE, CREATE SEQUENCE) etc should be used.___
+
+Create a Table
+
+	CREATE TABLE comics (
+		id NUMBER(10) NOT NULL,
+		title VARCHAR2(60),
+		issue NUMBER(4),
+		publisher VARCHAR2(60),
+		PRIMARY KEY (id)
+	);
+	CREATE SEQUENCE comics_seq;
+
+Alternatively use [this SQL file](http://www.oracle.com/technology/pub/files/comics.sql) to create the application table, `COMICS`.
+
+	sqlplus ruby/ruby@rails @comics.sql
+
+Note, in this case the database SID is `rails`. The default SID for Oracle Enterprise Edition 10g is `orcl`, for Express Edition it’s `XE`.
+
+### Create a dinky Application
+
+Your application skeleton:
+
+	rails comics_catalog
+	cd comics_catalog
+
+Edit `comics_catalog/config/databases.yml` – rails needs to know your login & password info.
+
+Within your project directory, there is a directory called config and in it is a file named `database.yml`. You need to edit `database.yml` using your favourite text editor. Initially, the file will look like this:
+
+	development:
+		adapter: mysql
+		database: rails_development
+		host: localhost
+		username: root
+		password:
+
+	# Warning: The database defined as 'test' will be erased and
+	# re-generated from your development database when you run 'rake'.
+	# Do not set this db to the same as development or production.
+	test:
+		adapter: mysql
+		database: rails_test
+		host: localhost
+		username: root
+		password:
+
+	production:
+		adapter: mysql
+		database: rails_production
+		host: localhost
+		username: root
+		password:
+
+Change the development properties as follows:
+
+development:
+	adapter: oci
+	username: ruby
+	password: ruby
+	host: 127.0.0.1:1234/orcl
+
+`host:` takes a connect string of the form `<ip_address>:<port>/<database>` for the machine that your Oracle instance resides on.
+
+Use the magical scaffold command to build a web based CRUD interface to the table we created above...
+
+	ruby script/generate scaffold Comic
+
+Now you can access your Rails Comic Catalog application on your own development machine, using your favourite Web browser. Just access the following URL: <http://localhost:3000/comics/list>
+
+
+Part 3: Pen of pesky Mongrels...
+--------------------------------
+
+___Before you go any further, make sure your app works in production mode!___
+
+
+### Install Mongrel
+
+The easiest way to get started with Mongrel is to install it via RubyGems:
+
+	gem install mongrel
+
+Select the highest stable version number marked (mswin32).
+
+Run Mongrel in the background with:
+
+	cd myrailsapp
+	mongrel_rails start -d
+
+and stop it with:
+
+	mongrel_rails stop
+
+There’s quite a few options you can set for the start command. Use `mongrel_rails start -h` to see them all.
+
+
+### Mongrel as a Service
+
+Install the gem (pick the most recent one):
+
+	gem install win32-service
+	gem install mongrel_service
+
+Install your app as a service:
+
+	mongrel_rails service::install –N comics_4001 -c c:\my\path\to\myapp –p 4001 –e production
+
+Your app will then appear under ‘services’ in Computer Management (accessed via Control Panel or by right clicking on My Computer)
+
+You can then set the service to start automagically. Right click on ‘comics_4001’, choose ‘properties’ and change the startup type to ‘automatic’.
+
+This is really all you need for a small application – perhaps an internal company app or something.
+
+__Cons:__
+
+* You don’t get page caching
+* Doesn’t scale
+* Rails is single threaded so user requests get queued up.
+
+While rails is serving an action to one user, all the other users need to wait. This is bad if some of your actions take a while, which is why we need Pen...
+
+
+### Load Balancing Mongrels with Pen
+
+Pen requires [cygwin1.dll](http://www.dll-files.com/dllindex/dll-files.shtml?cygwin1), so make sure it’s in the same directory as [pen.exe](ftp://siag.nu/pub/pen/pen-0.17.1a.exe). Also, make you get the one with the ‘a’ suffix – the other version doesn’t work for some reason.
+
+To run pen as a service you need the [Windows Server Resource Kit Tools](http://www.microsoft.com/downloads/details.aspx?FamilyID=9D467A69-57FF-4AE7-96EE-B18C4790CFFD&displaylang=en). Install it somewhere. To keep things simple I'll use `c:\reskit`
+
+Start a couple of mongrels:
+
+	mongrel_rails service::install –N comics_4001 -c c:\my\path\to\myapp –p 4001 –e production
+	mongrel_rails service::install –N comics_4002 -c c:\my\path\to\myapp –p 4002 –e production
+
+You could write a batch file to start and stop these multiple servers.
+
+The following command will balance your mongrels just fine:
+
+	pen 4000 localhost:4001 localhost:4002
+
+But to do things properly, keep reading.
+
+
+### Pen as a Service
+
+Install pen as a service using `srvany.exe` from the reskit:
+
+	c:\reskit\instsrv Pen c:\reskit\srvany.exe
+	>> The service was successfuly added!
+
+Set some parameters with regedit. Go to `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Pen` and add a new key called `Parameters`. Add the following three String values to the parameters key:
+
+* Application = pen.exe
+* AppParameters = -f 4000 localhost:4001 localhost:4002
+* AppDirectory = c:\pen
+
+Start the pen service from ‘Services’ or with the command:
+
+	net start pen
+
+Remove with:
+
+	sc delete pen
+
+Pen will then chug along happily and is suitable for most apps with a few users. You still don’t get page caching, for that you need Apache, but this solution is free, simple and performs moderately well.
+
+> References:  
+> [tutorial provided by Oracle](http://www.oracle.com/technology/pub/articles/haefel-oracle-ruby.html)  
+> [Deployment Strategies for Rails on Windows Servers](http://www.napcs.com/howto/rails/deploy/index.html)

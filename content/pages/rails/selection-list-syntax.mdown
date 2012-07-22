@@ -1,0 +1,26 @@
+date: Date: 2007-03-21 13:02:08 +1200
+categories: rails
+read more: Read more
+summary: I don't think the explanation of 'selection lists' in Agile Web Development with Rails(1st ed) is very clear.
+
+# Selection List syntax
+=======================
+
+I don't think the explanation of 'selection lists' in Agile Web Development with Rails(1st ed) is very clear. It mentions:
+
+	select(:variable, :attribute, choices, options, html_options)
+
+Where you can then set the default selection with:
+
+	@variable.attribute
+
+However this variable is not available automatically, you need to create it yourself. The def in the api is more intuitively described as:
+
+	select(:my_object, :method, choices, options, html_options)
+
+You must then create your own class with the accessor methods you need so that in the controller you can do something like:
+
+	def action
+		@my_object = MyClass.new
+		@my_object.method = params[:my_object][:method]
+	end

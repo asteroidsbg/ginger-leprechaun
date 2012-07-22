@@ -3,7 +3,6 @@
 .bundle
 .DS_Store
 .sass-cache
-content
 
 log
 *.sublime-project
