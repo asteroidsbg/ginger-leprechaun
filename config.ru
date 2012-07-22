@@ -4,7 +4,8 @@ require "logger"
 
 require 'coderay'
 require 'rack/codehighlighter'
-use Rack::Codehighlighter, :coderay, :markdown => true, :element => "pre>code", :pattern => /\A:::(\w+)\s*(\n|&#x000A;)/i
+# use Rack::Codehighlighter, :coderay, :markdown => true, :element => "pre>code", :pattern => /\A:::(\w+)\s*(\n|&#x000A;)/i
+use Rack::Codehighlighter, :coderay, :markdown => true, :element => "pre>code"
 
 Bundler.require(:default)
 
