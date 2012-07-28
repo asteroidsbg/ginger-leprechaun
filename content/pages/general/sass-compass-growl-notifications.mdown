@@ -1,0 +1,30 @@
+date: 2012-07-28 18:38:00 +1200
+categories: css
+read more: Read more on getting Growl notifications for Compass
+summary: Handy Growl notifications for Compass
+
+# Compass growl notifications
+
+When running `compass watch` in the background there's a slight delay before the css is generated and the page you're working on is ready to refresh. To get a handy notification for this you can install [Growl](http://www.growlforwindows.com/gfw/default.aspx).
+
+Then install the [GNTP(Growl Notification Transport Protocol)](http://snaka.info/ruby_gntp/) ruby gem:
+
+	gem install ruby_gntp
+
+Then add the following to your compass `config.rb`
+
+	:::ruby
+	# 
+	#  Sass compile configuration
+	#
+
+	require 'ruby_gntp'
+
+	# ...
+
+	on_stylesheet_saved do |filename|
+	   GNTP.notify({
+	      :app_name => "Compass",
+	      :title     => "#{File.basename(filename)} updated!"
+	   })
+	end
