@@ -1,0 +1,99 @@
+date: 2012-09-29 21:09:00 +1200
+categories: javascript
+read more: Read more on gettng started with Ext JS
+summary: Ext is a RIA library so embrace that, do things the Ext way.
+
+# Ext JS as a HTML pre-processor
+
+ExtJS is a RIA library. It requires a bit of a shift in mindset from the 'progressive enhancment' style of Prototype or JQuery - where you perform direct DOM manipulations.
+
+So you've decided to build an app, and at first you find it easier to start with a HTML skeleton page and render Ext components into it.
+
+This is a smell that you're still in the progressive enhancment mindset. If you're building an _application_, then it probably isn't going to function without javascript enabled anyway. [So why not embrace the Ext way?](http://vimeo.com/9768559) 
+
+I tend to think of it as if it were a bit like a HTML pre-processor. The HTML generated is almost incidental, like assembly language. I find it really nice to operate at that higher level of abstraction. Arranging _components_ rather than the raw HTML.
+
+So for instance...
+
+    :::javascript
+    { xtype: 'component', cls: 'my_class', html: 'hello world!' }
+
+...is essentially the same as:
+
+    :::html
+    <div class="my_class">hello world!</div>
+
+## And you're not just restricted to `<div>`'s.
+
+Ext unfortunately tends to use divs for most things by default. But it's easy to override if you want more semantic html:
+
+    :::javascript
+    { xtype: 'component', autoEl: 'p', html: 'hello world!' }
+<br />
+    :::html
+    <p>hello world!</p>
+
+### A bit more advanced...
+
+So now you have some components and you want to group them together in a **container**:
+
+    :::javascript
+    {
+        xtype: 'container',
+        autoEl: 'ul',
+        defaultType: 'component', // Children xtype
+        items: [
+            { autoEl: 'li', html: 'List Item 1' },
+            { autoEl: 'li', html: 'List Item 2' },
+            { autoEl: 'li', html: 'List Item 3' },
+        ]
+    }
+<br />
+    :::html
+    <ul>
+        <li>List Item 1</li>
+        <li>List Item 2</li>
+        <li>List Item 3</li>
+    </ul>
+
+Of course these list items would likely be created from a store. I'm just illustrating that you're not restricted to constructing your components entirely out of `<div>`'s.
+
+(In fact if you're dealing with a collection of records it's much better to use a [View]().)
+
+# Anatomy of a page
+
+You're already used to looking at a design and mentally slicing it up into divs, lists, etc, So why not just slice it up using Ext terminology?
+
+![Ext Page](../attachments/ext_page.png)
+
+So we can start to build up a page from containers and components. Without really worrying about the HTML that's generated.
+
+    :::javascript
+    {
+        xtype: 'container',
+        items: [
+            { 
+                xtype: 'component',
+                itemId: 'header'
+            },
+            // think of the following as
+            // just specialised containers...
+            {
+                xtype: 'toolbar',
+                items: [ menu1, menu2, menu3 ]
+            },
+            { xtype: 'view', itemId: 'main' },
+            { xtype: 'view', itemId: 'sidebar' }
+        ]
+    }
+
+
+It's a bit of a change in mind-set, to accept some loss of control over the final HTML. But once you get used to it, there are a lot of benefits to working with widgets.
+
+You only have to work out the template once but can enjoy re-use. And importantly you can keep UI behviour organised with the widget itself.
+
+When it comes time for styling, use [Firebug](http://getfirebug.com/) or [devtools](https://developers.google.com/chrome-developer-tools/) to inspect the actual DOM to write your CSS against.
+
+References:  
+[Jonathan Julian. 5 tips to improve your Ext JS application](http://vimeo.com/9768559)  
+[...and the slides](http://www.slideshare.net/jonathanjulian/five-tips-to-improve-your-ext-js-application)
