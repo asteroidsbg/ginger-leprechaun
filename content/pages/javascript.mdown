@@ -1,3 +1,5 @@
 # Javascript
 
+[three.js](http://mrdoob.github.com/three.js/) is a lightweight 3D library with a very low level of complexity — in other words, for dummies. The library provides `<canvas>`, `<svg>` and WebGL renderers.
+
 [Ext JS](http://www.sencha.com/products/extjs/) is a JavaScript Framework for Rich Apps in Every Browser. Client-side MVC keeps your JS organised, with a [large component set](http://dev.sencha.com/deploy/ext-4.1.0-gpl/examples/) to choose from.
