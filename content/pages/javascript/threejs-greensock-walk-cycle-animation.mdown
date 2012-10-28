@@ -1,7 +1,8 @@
-date: 2012-10-27 19:09:00 NZT
+date: 2012-10-27 14:40:00 NZT
 categories: javascript
 read more: Read more on gettng started with three.js
-summary: Three.js basic walk cycle animation using GreenSock tweens
+summary: To learn the basics of Three.js I wanted to make a walking man using primitives and transforms. Animation uses GreenSock tweens.
+
 
 # Three.js & GreenSock walk cycle animation
 
