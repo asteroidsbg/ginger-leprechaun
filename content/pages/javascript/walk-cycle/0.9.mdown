@@ -1,0 +1,9 @@
+layout: layout_plain
+template: plain
+
+<script>
+	var Walk = {
+		baseUrl: 'https://raw.github.com/craftstudios/Walk-Cycle/0.9_camera_motion/lib'
+	}
+</script>
+<script data-main="https://raw.github.com/craftstudios/Walk-Cycle/0.9_camera_motion/app/app" src="https://raw.github.com/craftstudios/Walk-Cycle/0.9_camera_motion/lib/require.js/require.min.js"></script>
