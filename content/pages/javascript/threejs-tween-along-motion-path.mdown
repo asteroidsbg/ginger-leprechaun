@@ -1,4 +1,4 @@
-date: 2012-11-09 14:40:00 NZT
+date: 2012-12-01 14:40:00 NZT
 categories: javascript three.js
 read more: Read more on three.js motion paths
 summary: In a previous post I made an avatar. Now to make him walk along a path.
