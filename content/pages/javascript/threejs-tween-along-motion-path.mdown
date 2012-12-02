@@ -1,0 +1,113 @@
+date: 2012-11-09 14:40:00 NZT
+categories: javascript three.js
+read more: Read more on three.js motion paths
+summary: In a previous post I made an avatar. Now to make him walk along a path.
+
+
+# Three.js tweening along a path
+
+In a [previous post][walk-cycle] we had this.
+
+[walk-cycle]: threejs-greensock-walk-cycle-animation
+
+<a href="walk-cycle/0.5" class="image" title="Verson 0.5" target="_blank">
+  <img src="/attachments/walk-cycle/0.5.png" alt="Verson 0.5" />
+</a>
+<a href="walk-cycle/0.5" title="Verson 0.5" target="_blank">Version 0.5</a>
+
+I've stopped the walk-cycle animation for now, so I can concentrate on drawing a path for the man to 'snap to'.
+
+	:::javascript
+	var figureEight = new THREE.Geometry();
+	var smoothness = 100;
+
+	// array of vectors to determine shape
+	var figureEightShape = new THREE.ClosedSplineCurve3([
+		new THREE.Vector3(x, y, z)...
+	]);
+
+	// then get the geometry
+	var splinePoints = figureEightShape.getPoints(smoothness);
+	for(var i = 0; i < splinePoints.length; i++){
+	    figureEightGeometry.vertices.push(splinePoints[i]);
+	}
+
+Voilà: a nice motion guide:
+
+<a href="walk-cycle/0.6" class="image" title="Verson 0.6" target="_blank">
+  <img src="/attachments/walk-cycle/0.6.png" alt="Verson 0.6" />
+</a>
+<a href="walk-cycle/0.6" title="Verson 0.6" target="_blank">Version 0.6</a>
+
+At this point it was getting annoying managing all the individual file dependencies in the index.html, so I started using [require.js][require.js].
+
+It offers a pretty nice way of requiring dependencies. I have one 'class' per module:
+
+	:::javascript
+	/**
+	 * Scene with lights, props & actors
+	 *
+	 * @type {World}
+	 */
+	define([
+
+		"app/Utils",
+		"app/MotionPath",
+		"app/shapes/FigureEight3",
+		"app/shapes/RaisedFigureEight3",
+		"app/person/model/Person",
+		"app/person/animations/Walk"
+
+	], function(Utils, MotionPath, FigureEight3, RaisedFigureEight3, Person, Walk) {
+		// all dependencies have loaded and can be used here now.
+	}
+
+[require.js]: http://requirejs.org/
+
+Once we have a guide, we need to actually animate along that guide.
+
+Anywhere between 0..1, 0 being the start and 1 being the very end of the path,
+we can ask for it's co-ordinates.
+
+So inside a loop we can do this:
+
+	:::javascript
+	// get the position data half way along the path
+	var pathPosition = motionGuide.getPoint(0.5);
+				
+	// move the man to that position
+	object3D.position.x = pathPosition.x;
+	object3D.position.z = pathPosition.z;
+
+
+<a href="walk-cycle/0.7" class="image" title="Verson 0.7" target="_blank">
+  <img src="/attachments/walk-cycle/0.7.png" alt="Verson 0.7" />
+</a>
+<a href="walk-cycle/0.7" title="Verson 0.7" target="_blank">Version 0.7</a>
+
+But always facing the same direction. Lame! To orient the man to the path we need to get the tangent (ref?)
+
+Again, we do this in a loop for all points along the path from 0..1:
+
+	:::javascript
+	// get the orientation angle quarter way along the path
+	var tangent = motionGuide.getTangent(0.25);
+	var angle = Math.atan2(-tangent.z, tangent.x);
+
+	// set angle of the man at that position
+	object3D.rotation.y = angle;
+
+
+<a href="walk-cycle/0.8" class="image" title="Verson 0.8" target="_blank">
+  <img src="/attachments/walk-cycle/0.8.png" alt="Verson 0.8" />
+</a>
+<a href="walk-cycle/0.8" title="Verson 0.8" target="_blank">Version 0.8</a>
+
+Now got the basics of animating along a path guide... can get a bit fancy with making the camera follow a path too.
+In this case the camera is on the magenta motion guide.
+
+<a href="walk-cycle/0.9" class="image" title="Verson 0.9" target="_blank">
+  <img src="/attachments/walk-cycle/0.9.png" alt="Verson 0.9" />
+</a>
+<a href="walk-cycle/0.9" title="Verson 0.9" target="_blank">Version 0.9</a>
+
