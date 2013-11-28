@@ -1,14 +1,14 @@
 layout: layout_plain
 template: plain
 
-<script src="https://raw.github.com/mrdoob/three.js/master/build/three.min.js"></script>
-<script src="https://raw.github.com/mrdoob/three.js/master/examples/js/controls/TrackballControls.js"></script>
+<script src="https://rawgithub.com/mrdoob/three.js/master/build/three.min.js"></script>
+<script src="https://rawgithub.com/mrdoob/three.js/master/examples/js/controls/TrackballControls.js"></script>
 
 <script type="text/javascript">
 	// global namespace for our app
 	window.Walk = {};
 </script>
 
-<script src="https://raw.github.com/craftstudios/Walk-Cycle/0.1/app/viewport.js"></script>
-<script src="https://raw.github.com/craftstudios/Walk-Cycle/0.1/app/material_factory.js"></script>
-<script src="https://raw.github.com/craftstudios/Walk-Cycle/0.1/app/app.js"></script>
+<script src="https://rawgithub.com/craftstudios/Walk-Cycle/0.1/app/viewport.js"></script>
+<script src="https://rawgithub.com/craftstudios/Walk-Cycle/0.1/app/material_factory.js"></script>
+<script src="https://rawgithub.com/craftstudios/Walk-Cycle/0.1/app/app.js"></script>
