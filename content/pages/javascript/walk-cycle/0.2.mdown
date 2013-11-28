@@ -1,8 +1,8 @@
 layout: layout_plain
 template: plain
 
-<script src="https://raw.github.com/mrdoob/three.js/master/build/three.min.js"></script>
-<script src="https://raw.github.com/mrdoob/three.js/master/examples/js/controls/TrackballControls.js"></script>
+<script src="https://rawgithub.com/mrdoob/three.js/master/build/three.min.js"></script>
+<script src="https://rawgithub.com/mrdoob/three.js/master/examples/js/controls/TrackballControls.js"></script>
 <script src="https://www.greensock.com/js/src/TweenMax.min.js"></script>
 
 <script type="text/javascript">
@@ -10,6 +10,6 @@ template: plain
 	window.Walk = {};
 </script>
 
-<script src="https://raw.github.com/craftstudios/Walk-Cycle/0.2/app/viewport.js"></script>
-<script src="https://raw.github.com/craftstudios/Walk-Cycle/0.2/app/material_factory.js"></script>
-<script src="https://raw.github.com/craftstudios/Walk-Cycle/0.2/app/app.js"></script>
+<script src="https://rawgithub.com/craftstudios/Walk-Cycle/0.2/app/viewport.js"></script>
+<script src="https://rawgithub.com/craftstudios/Walk-Cycle/0.2/app/material_factory.js"></script>
+<script src="https://rawgithub.com/craftstudios/Walk-Cycle/0.2/app/app.js"></script>
